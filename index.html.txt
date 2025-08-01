@@ -1,73 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Aircraft Map</title>
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Raleway&display=swap" rel="stylesheet" />
-
-<!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-sA+e2j3Iyb5tM+dtxgh+u6yF7Ge6ZGQBFz0D1wU0T9M=" crossorigin=""/>
-
-<style>
-body {
-margin: 0;
-font-family: 'Raleway', sans-serif;
-background-color: #f4f2ee;
-}
-
-header {
-font-family: 'Cinzel', serif;
-background: #ddd6ce;
-text-align: center;
-padding: 1rem;
-}
-
-#map {
-height: 90vh;
-width: 100%;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aircraft Manufacturer Map</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha512-sA+RlFvyMTVPBrrhP2GS1fME+f3vQeRZ4dfcFjEfsNwryGbh4MrU2ECu3M5Rm5HUvTxSWJwR2P1wzN9WnlvD1w=="
+    crossorigin=""
+  />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    #map {
+      width: 100%;
+      height: 100vh; /* Fix: ensure map fills screen */
+    }
+  </style>
 </head>
 <body>
-<header>
-<h1>Aircraft Manufacturers by Location</h1>
-</header>
-<div id="map"></div>
+  <div id="map"></div>
 
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-o9N1jzGOBLTLDP6MYERwJvI19qIPa7aHlsv2Wrcc0+o=" crossorigin=""></script>
+  <script
+    src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha512-DiG1V+9yoRssFUTL05yoH5h4zrmXZ+p+uLsN8V33yPK0tcQLHcb6kt4HuX5vMRTUnhEPDYuJK0Wm43tEJgLA7A=="
+    crossorigin="">
+  </script>
+  <script>
+    const map = L.map('map').setView([20, 0], 2);
 
-<script>
-const map = L.map('map').setView([30, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-attribution: '&copy; OpenStreetMap contributors',
-maxZoom: 18
-}).addTo(map);
+    const manufacturers = [
+      { name: "Boeing", lat: 47.518, lon: -122.302, link: "#" },
+      { name: "Douglas", lat: 33.8121, lon: -118.1445, link: "#" },
+      { name: "Lockheed", lat: 34.4208, lon: -119.6982, link: "#" },
+      { name: "de Havilland", lat: 51.75, lon: -0.33, link: "#" },
+      { name: "Airbus", lat: 43.6047, lon: 1.4442, link: "#" },
+      { name: "Fokker", lat: 52.3081, lon: 4.7642, link: "#" },
+      { name: "Ilyushin", lat: 55.7558, lon: 37.6173, link: "#" },
+      { name: "Antonov", lat: 50.4100, lon: 30.5210, link: "#" }
+    ];
 
-const manufacturers = [
-{ name: 'Boeing', lat: 47.4502, lon: -122.3088, link: '/-/collection/boeing' },
-{ name: 'Douglas', lat: 33.9425, lon: -118.4081, link: '/-/collection/douglas-designs' },
-{ name: 'Lockheed', lat: 34.2000, lon: -118.3587, link: '/-/collection/lockheed-civil-designs' },
-{ name: 'Grumman', lat: 40.6937, lon: -73.9957, link: '/-/collection/grumman' },
-{ name: 'de Havilland', lat: 51.4170, lon: -0.1961, link: '/-/collection/de-havilland' },
-{ name: 'Avro', lat: 53.4794, lon: -2.2453, link: '/-/collection/avro' },
-{ name: 'Airbus', lat: 43.6047, lon: 1.4442, link: '/-/collection/airbus' },
-{ name: 'Dassault', lat: 48.8583, lon: 2.2945, link: '/-/collection/dassault' },
-{ name: 'Junkers', lat: 51.0504, lon: 13.7373, link: '/-/collection/junkers' },
-{ name: 'Dornier', lat: 48.1351, lon: 11.5820, link: '/-/collection/dornier' },
-{ name: 'Fokker', lat: 52.3081, lon: 4.7642, link: '/-/collection/fokker' },
-{ name: 'Ilyushin', lat: 55.7558, lon: 37.6173, link: '/-/collection/ilyushin' },
-{ name: 'Antonov', lat: 50.4501, lon: 30.5234, link: '/-/collection/antonov' }
-];
-
-manufacturers.forEach(m => {
-L.marker([m.lat, m.lon]).addTo(map)
-.bindPopup(`<strong>${m.name}</strong><br><a href="${m.link}" target="_blank">Explore Gallery</a>`);
-});
-</script>
+    manufacturers.forEach(m => {
+      const marker = L.marker([m.lat, m.lon]).addTo(map);
+      marker.bindPopup(`<strong>${m.name}</strong><br><a href="${m.link}">View</a>`);
+    });
+  </script>
 </body>
 </html>
