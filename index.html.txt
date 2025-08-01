@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aircraft Manufacturers Map – Zoggavia</title>
+<link
+href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Raleway&display=swap"
+rel="stylesheet"
+/>
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+crossorigin=""
+/>
+<style>
+body {
+font-family: 'Raleway', sans-serif;
+margin: 0;
+background-color: #f4f2ee;
+color: #2b2b2b;
+}
+header {
+background-color: #ddd6ce;
+padding: 1rem;
+text-align: center;
+font-family: 'Cinzel', serif;
+}
+#map {
+height: 80vh;
+width: 100%;
+max-width: 1200px;
+margin: 1rem auto;
+border: 1px solid #ccc;
+box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.info {
+max-width: 900px;
+margin: 0 auto 1rem;
+padding: 0 1rem;
+font-size: 1rem;
+text-align: center;
+}
+a {
+color: #003366;
+text-decoration: none;
+font-weight: 600;
+}
+a:hover {
+text-decoration: underline;
+}
+</style>
+</head>
+<body>
+<header>
+<h1>Aircraft Manufacturers by Location</h1>
+</header>
+<p class="info">
+Click on markers to explore galleries and learn more about these historic manufacturers.
+</p>
+<div id="map"></div>
+
+<script
+src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+crossorigin=""
+></script>
+<script>
+const map = L.map('map').setView([30, 0], 2);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+attribution: '&copy; OpenStreetMap contributors',
+maxZoom: 18,
+}).addTo(map);
+
+const manufacturers = [
+{ name: 'Boeing', lat: 47.4502, lon: -122.3088, link: '/-/collection/boeing' },
+{ name: 'Douglas', lat: 33.9425, lon: -118.4081, link: '/-/collection/douglas-designs' },
+{ name: 'Lockheed', lat: 34.2000, lon: -118.3587, link: '/-/collection/lockheed-civil-designs' },
+{ name: 'Grumman', lat: 40.6937, lon: -73.9957, link: '/-/collection/grumman' },
+{ name: 'de Havilland', lat: 51.4170, lon: -0.1961, link: '/-/collection/de-havilland' },
+{ name: 'Hawker', lat: 51.4170, lon: -0.1961, link: '/-/collection/hawker' },
+{ name: 'Avro', lat: 53.4794, lon: -2.2453, link: '/-/collection/avro' },
+{ name: 'Airbus', lat: 43.6047, lon: 1.4442, link: '/-/collection/airbus' },
+{ name: 'Dassault', lat: 48.8583, lon: 2.2945, link: '/-/collection/dassault' },
+{ name: 'Breguet', lat: 48.8583, lon: 2.2945, link: '/-/collection/breguet' },
+{ name: 'Junkers', lat: 51.0504, lon: 13.7373, link: '/-/collection/junkers' },
+{ name: 'Dornier', lat: 48.1351, lon: 11.5820, link: '/-/collection/dornier' },
+{ name: 'Fokker', lat: 52.3081, lon: 4.7642, link: '/-/collection/fokker' },
+{ name: 'Ilyushin', lat: 55.7558, lon: 37.6173, link: '/-/collection/ilyushin' },
+{ name: 'Tupolev', lat: 55.7558, lon: 37.6173, link: '/-/collection/tupolev' },
+{ name: 'Antonov', lat: 50.4501, lon: 30.5234, link: '/-/collection/antonov' }
+];
+
+manufacturers.forEach(m => {
+const marker = L.marker([m.lat, m.lon]).addTo(map);
+marker.bindPopup(`<strong>${m.name}</strong><br><a href="${m.link}">Explore Gallery</a>`);
+});
+</script>
+</body>
+</html>
